@@ -14,19 +14,18 @@ const Home = () => {
   
   const [data, setData] = useState([])
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch(URL)
+      const json = await response.json()
+      console.log(json)
+    } catch (error) {
+      console.log("Ocurrio un error", error)
+    }
+  }
+
   useEffect(() => {
-    fetch(URL)
-      .then((response) => {
-        response.json()
-          .then(
-            (json) => {
-              console.log(json)
-            }
-          )
-      })
-      .catch((error) => {
-        console.log('Ocurrio un error', error)
-      }) 
+    fetchData()
   },[])
 
 
