@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
 import useSWR from 'swr'
 import { fetcher } from '../commons/utils'
+import { Post } from '../components'
 import client_id from '../env'
 
 const Container = styled.View`
@@ -23,9 +24,14 @@ const Home = () => {
   return (
     <Container paddingTop={insets.top}>
       <Text>Home</Text>
-      {React.Children.toArray(        
+      {!!data && React.Children.toArray(        
           data.map((item) => {
-            return <Text>{item.id}</Text>
+            return <Post
+              autorName = {item.user.username} 
+              imageUrl={item.urls.regular}
+              imageUser={item.user.profile_image.small}
+              postLocation={item.user.location}
+            />
         })
       )}
     </Container>
