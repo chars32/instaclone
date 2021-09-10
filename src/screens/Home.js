@@ -34,9 +34,11 @@ const Home = () => {
   return (
     <Container paddingTop={insets.top}>
       <Text>Home</Text>
-      {data.map((item) => {
-        return <Text>{item.id}</Text>
-      })}
+      {React.Children.toArray(        
+        data.map((item) => {
+          return <Text>{item.id}</Text>
+        })
+      )}
     </Container>
   )
 }
