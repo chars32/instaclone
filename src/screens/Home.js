@@ -10,12 +10,23 @@ const Container = styled.View`
 `
 
 const Home = () => {
-  // `https://api.unsplash.com/photos/?client_id=${client_id}`
-
+  const URL = `https://api.unsplash.com/photos/?client_id=${client_id}`
+  
   const [data, setData] = useState([])
 
   useEffect(() => {
-
+    fetch(URL)
+      .then((response) => {
+        response.json()
+          .then(
+            (json) => {
+              console.log(json)
+            }
+          )
+      })
+      .catch((error) => {
+        console.log('Ocurrio un error', error)
+      }) 
   },[])
 
 
@@ -23,6 +34,9 @@ const Home = () => {
   return (
     <Container paddingTop={insets.top}>
       <Text>Home</Text>
+      {data.map((item) => {
+        return <Text>{item.id}</Text>
+      })}
     </Container>
   )
 }
