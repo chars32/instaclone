@@ -19,6 +19,7 @@ const Home = () => {
     try {
       const response = await axios(URL)
       console.log(response.data)
+      setData(response.data)
     } catch (error) {
       console.log("Ocurrio un error", error)
     }
