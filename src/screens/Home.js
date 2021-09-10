@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -16,9 +17,8 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(URL)
-      const json = await response.json()
-      console.log(json)
+      const response = await axios(URL)
+      console.log(response.data)
     } catch (error) {
       console.log("Ocurrio un error", error)
     }
