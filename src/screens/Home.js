@@ -23,13 +23,11 @@ const Home = () => {
   return (
     <Container paddingTop={insets.top}>
       <Text>Home</Text>
-      {!!data &&
-        React.Children.toArray(        
+      {React.Children.toArray(        
           data.map((item) => {
             return <Text>{item.id}</Text>
         })
       )}
-      {!!error && <Text>Ocurrio un error</Text>}
     </Container>
   )
 }
