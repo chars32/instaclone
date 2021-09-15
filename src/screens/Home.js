@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { ScrollView, Text } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
 import useSWR from 'swr'
@@ -23,16 +23,18 @@ const Home = () => {
   const insets = useSafeAreaInsets();
   return (
     <Container paddingTop={insets.top}>
-      {!!data && React.Children.toArray(        
-          data.map((item) => {
-            return <Post
-              autorName = {item.user.username} 
-              imageUrl={item.urls.regular}
-              imageUser={item.user.profile_image.small}
-              postLocation={item.user.location}
-            />
-        })
-      )}
+      <ScrollView>
+        {!!data && React.Children.toArray(        
+            data.map((item) => {
+              return <Post
+                autorName = {item.user.username} 
+                imageUrl={item.urls.regular}
+                imageUser={item.user.profile_image.small}
+                postLocation={item.user.location}
+              />
+          })
+        )}
+      </ScrollView>
     </Container>
   )
 }
