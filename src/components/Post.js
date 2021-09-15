@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native'
 import styled from 'styled-components/native'
 
@@ -90,8 +90,11 @@ const Age = styled.Text`
   color: rgba(0, 0, 0, 0.4);
 `
 
-
 const Post = ({autorName, imageUrl, imageUser, postLocation}) => {
+
+  const [liked, setLiked] = useState(false)
+  const [bookmark, setBookmark] = useState(false)
+
   return (
     <Container>
       <Header>
@@ -123,8 +126,11 @@ const Post = ({autorName, imageUrl, imageUser, postLocation}) => {
       <HorizontalMargin>
         <PostActions>
           <AuxRow>
-            <Actions hasMargin>
-              <Ionicons name="ios-heart-outline" size={26} color="black" />
+            <Actions hasMargin onPress={() => setLiked(!liked)}>
+              <Ionicons 
+                name={`ios-heart-${liked ? 'sharp' : 'outline'}`} 
+                size={26} 
+                color={liked ? 'red': 'black'} />
             </Actions>
             <Actions hasMargin>
               <FontAwesome name="comment-o" size={24} color="black" />
@@ -134,8 +140,11 @@ const Post = ({autorName, imageUrl, imageUser, postLocation}) => {
             </Actions>
           </AuxRow>
 
-          <Actions>
-            <FontAwesome name="bookmark-o" size={24} color="black" />
+          <Actions onPress={() => setBookmark(!bookmark)}>
+            <FontAwesome 
+              name={bookmark ? 'bookmark' : 'bookmark-o'}
+              size={24} 
+              color="black" />
           </Actions>
         </PostActions>
 

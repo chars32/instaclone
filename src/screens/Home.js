@@ -24,16 +24,16 @@ const Home = () => {
   return (
     <Container paddingTop={insets.top}>
       <ScrollView>
-        {!!data && React.Children.toArray(        
-            data.map((item) => {
-              return <Post
-                autorName = {item.user.username} 
-                imageUrl={item.urls.regular}
-                imageUser={item.user.profile_image.small}
-                postLocation={item.user.location}
-              />
-          })
-        )}
+      {!!data && React.Children.toArray(        
+          data.map((item) => {
+            return <Post
+              autorName = {item.user.username} 
+              imageUrl={item.urls.regular}
+              imageUser={item.user.profile_image.small}
+              postLocation={item.user.location}
+            />
+        })
+      )}
       </ScrollView>
     </Container>
   )
