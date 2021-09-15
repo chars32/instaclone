@@ -44,11 +44,50 @@ const PostActions = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 13.5px 14px 14.5px 14px;
-`
+  padding: 10px 0 8px 0;
+  `
 
 const Actions = styled.TouchableOpacity`
   margin-right: ${({hasMargin}) => hasMargin ? '17px' : 0};
+  `
+
+const HorizontalMargin = styled.View`
+  padding-left: 14px;
+  padding-right: 14px;
+  `
+
+const Likes = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
+`
+const LikeImage = styled.Image`
+  width: 17px;
+  height: 17px;
+  border-radius: ${17 / 2}px;
+  margin-right: 5.5px;
+`
+const LikeText = styled.Text`
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: -0.07px;
+`
+const AuxBoldText = styled.Text`
+  font-weight: bold;
+`
+
+const Description = styled.Text`
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: -0.1px;
+  margin-bottom: 8px;
+`
+
+const Age = styled.Text`
+  font-size: 11px;
+  line-height: 13px;
+  letter-spacing: -0.05px;
+  color: rgba(0, 0, 0, 0.4);
 `
 
 
@@ -81,24 +120,46 @@ const Post = ({autorName, imageUrl, imageUser, postLocation}) => {
           {uri: imageUrl}
         } 
       />
+      <HorizontalMargin>
+        <PostActions>
+          <AuxRow>
+            <Actions hasMargin>
+              <Ionicons name="ios-heart-outline" size={26} color="black" />
+            </Actions>
+            <Actions hasMargin>
+              <FontAwesome name="comment-o" size={24} color="black" />
+            </Actions>
+            <Actions>
+              <Ionicons name="paper-plane-outline" size={24} color="black" />
+            </Actions>
+          </AuxRow>
 
-      <PostActions>
-        <AuxRow>
-          <Actions hasMargin>
-            <Ionicons name="ios-heart-outline" size={26} color="black" />
-          </Actions>
-          <Actions hasMargin>
-            <FontAwesome name="comment-o" size={24} color="black" />
-          </Actions>
           <Actions>
-            <Ionicons name="paper-plane-outline" size={24} color="black" />
+            <FontAwesome name="bookmark-o" size={24} color="black" />
           </Actions>
-        </AuxRow>
+        </PostActions>
 
-        <Actions>
-          <FontAwesome name="bookmark-o" size={24} color="black" />
-        </Actions>
-      </PostActions>
+        <Likes>
+          <LikeImage
+            source={
+              {uri: imageUser}
+            }
+          />
+          <LikeText>
+            Liked by <AuxBoldText>craig_love</AuxBoldText> and {''}
+            <AuxBoldText>44,686 others</AuxBoldText>
+          </LikeText>
+        </Likes>
+
+        <Description numberOfLines={3}>
+          <AuthorName>{autorName}</AuthorName>It is a long established fact that a reader will be 
+          distracted by the readable content of a page when 
+          looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution 
+          of letters, as opposed to using 'Content here, content here', making it look like readable English.
+        </Description>
+
+        <Age>2 hrs ago</Age>
+      </HorizontalMargin>
     </Container>
   )
 }
