@@ -29,7 +29,11 @@ const AuthorName = styled.Text`
   line-height: 18px;
   margin-bottom: 1px;
 `
-const PostLocation = styled.Text``
+const PostLocation = styled.Text`
+font-size: 11px;
+line-height: 13px;
+letter-spacing: 0.07px;
+`
 
 const PostImage = styled.Image`
 width: ${SIZES.width}px;
@@ -81,7 +85,7 @@ const Post = ({autorName, imageUrl, imageUser, postLocation}) => {
       <PostActions>
         <AuxRow>
           <Actions hasMargin>
-            <Ionicons name="ios-heart-outline" size={24} color="black" />
+            <Ionicons name="ios-heart-outline" size={26} color="black" />
           </Actions>
           <Actions hasMargin>
             <FontAwesome name="comment-o" size={24} color="black" />

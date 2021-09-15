@@ -23,7 +23,6 @@ const Home = () => {
   const insets = useSafeAreaInsets();
   return (
     <Container paddingTop={insets.top}>
-      <Text>Home</Text>
       {!!data && React.Children.toArray(        
           data.map((item) => {
             return <Post
