@@ -1,11 +1,12 @@
-import React from 'react'
-import { ScrollView, Text } from 'react-native'
+import React, { useRef } from 'react'
+import { ScrollView } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
 import useSWR from 'swr'
 import { fetcher } from '../commons/utils'
 import { Post } from '../components'
 import client_id from '../env'
+import LottieView from 'lottie-react-native';
 
 const Container = styled.View`
   flex: 1;
@@ -20,21 +21,37 @@ const Home = () => {
     revalidateOnMount: true
   })
 
+  const animation = useRef(null)
+
   const insets = useSafeAreaInsets();
   return (
     <Container paddingTop={insets.top}>
-      <ScrollView>
-      {!!data && React.Children.toArray(        
-          data.map((item) => {
-            return <Post
-              autorName = {item.user.username} 
-              imageUrl={item.urls.regular}
-              imageUser={item.user.profile_image.small}
-              postLocation={item.user.location}
-            />
-        })
-      )}
-      </ScrollView>
+            {data ? 
+        <ScrollView>
+          {React.Children.toArray(        
+              data.map((item) => {
+                return <Post
+                  autorName = {item.user.username} 
+                  imageUrl={item.urls.regular}
+                  imageUser={item.user.profile_image.small}
+                  postLocation={item.user.location}
+                />
+            })
+          )}
+          </ScrollView> 
+        : 
+          <LottieView
+            autoPlay
+            ref={animation}
+            style={{
+              width: 400,
+              height: 400,
+              backgroundColor: '#eee',
+            }}
+            source={require('../../assets/loader.json')}
+          />
+        }
+      
     </Container>
   )
 }
