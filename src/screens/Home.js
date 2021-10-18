@@ -1,8 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Dimensions, FlatList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
-import useSWR from 'swr'
+import useSWRInfinite from 'swr/infinite'
 import { fetcher } from '../commons/utils'
 import { Header, Post } from '../components'
 import client_id from '../env'
@@ -13,40 +13,53 @@ const Container = styled.View`
   padding-top: ${(props) => props.paddingTop}px;
 `
 
-const URL = `https://api.unsplash.com/photos/?client_id=${client_id}`
+const getKey = (pageIndex, previousPageData) => {
+  if(previousPageData && !previousPageData.length) return null;
+  return `https://api.unsplash.com/photos/?page=${pageIndex}&client_id=${client_id}`
+}
+
 
 const Home = () => {
 
-  const { data, error } = useSWR(URL, fetcher, {
+  const [page, setPage] = useState(10)
+
+  const { data, size, setSize } = useSWRInfinite(getKey, fetcher, {
     initialData: [],
-    revalidateOnMount: true
+    revalidateOnMount: true,
   })
+
 
   const animation = useRef(null)
 
   const {top} = useSafeAreaInsets()
 
   const fetchMore = () => {
-
+    setSize(size + 1)
   }
+
 
   return (
     <Container paddingTop={top}>
       {data ? 
         <FlatList
-        contentContainerStyle={{
-          width: Dimensions.get('screen').width,
-        }}
-        ListHeaderComponent={<Header />}
-        data={data}
-        renderItem={({item}) => {
-          return <Post 
-            autorName = {item.user.username} 
-            imageUrl={item.urls.regular}
-            imageUser={item.user.profile_image.small}
-            postLocation={item.user.location}
-          />
-        }}
+          contentContainerStyle={{
+            width: Dimensions.get('screen').width,
+          }}
+          ListHeaderComponent={<Header />}
+          data={data}
+          keyExtractor={(item, index) => `Post__${item.id}__${index}`}
+          renderItem={({item}) => {
+            return React.Children.toArray(item.map((image) => 
+              <Post 
+                autorName = {image.user.username} 
+                imageUrl={image.urls.regular}
+                imageUser={image.user.profile_image.small}
+                postLocation={image.user.location}
+              />
+            ))
+          }}
+          onEndReached={fetchMore}
+          onEndReachedThreshold={0.9}
         >
         </FlatList> 
         : 
