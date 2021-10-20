@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
 import useSWRInfinite from 'swr/infinite'
 import { fetcher } from '../commons/utils'
-import { Header, Post } from '../components'
+import { Header, Post, StoriesSlider } from '../components'
 import client_id from '../env'
 import LottieView from 'lottie-react-native';
 
@@ -45,7 +45,10 @@ const Home = () => {
           contentContainerStyle={{
             width: Dimensions.get('screen').width,
           }}
-          ListHeaderComponent={<Header />}
+          ListHeaderComponent={<>
+            <Header />
+            <StoriesSlider />
+          </>}
           data={data}
           keyExtractor={(item, index) => `Post__${item.id}__${index}`}
           renderItem={({item}) => {
