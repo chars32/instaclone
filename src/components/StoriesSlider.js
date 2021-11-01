@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient'
 
+import { Ionicons } from '@expo/vector-icons'
+
 const DATA_IMG = [
   {
     url: 'https://images.pexels.com/photos/9545106/pexels-photo-9545106.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
@@ -41,8 +43,8 @@ const Container = styled.ScrollView`
 `
 
 const UserStory = styled.TouchableOpacity`
-  margin-right: ${({hasMarginRight}) => (hasMarginRight ? '21px': '10px')};
-  margin-left: ${({hasMarginLeft}) => (hasMarginLeft ? '10px' : '0')};
+  margin-right: ${({ hasMarginRight }) => (hasMarginRight ? '21px' : '10px')};
+  margin-left: ${({ hasMarginLeft }) => (hasMarginLeft ? '10px' : '0')};
   align-items: center;
 `
 
@@ -50,7 +52,15 @@ const CircleContainer = styled(LinearGradient)`
   margin-bottom: 5px;
   width: 62px;
   height: 62px;
-  border-radius: ${62/2}px;
+  border-radius: ${62 / 2}px;
+  align-items: center;
+  justify-content: center;
+`
+const HighLightCircle = styled.View`
+  margin-bottom: 5px;
+  width: 62px;
+  height: 62px;
+  border-radius: ${62 / 2}px;
   align-items: center;
   justify-content: center;
 `
@@ -58,7 +68,7 @@ const CircleContainer = styled(LinearGradient)`
 const Avatar = styled.Image`
   width: 56px;
   height: 56px;
-  border-radius: ${56/2}px;
+  border-radius: ${56 / 2}px;
 `
 
 const UserName = styled.Text`
@@ -69,25 +79,46 @@ const UserName = styled.Text`
   color: #262626;
 `
 
-const StoriesSlider = () => {
+const StoriesSlider = (props) => {
+  const _data = props.data ? props.data : DATA_IMG
   return <Container horizontal showsHorizontalScrollIndicator={false}>
-    {
-      React.Children.toArray(DATA_IMG.map((user, index) => 
-      <UserStory hasMarginRight={index === DATA_IMG.length - 1 ? false : true} hasMarginLeft={index === 0 ? true : false}>
-        <CircleContainer
-           colors={['#FBAA47', '#D91A46', '#192f6a']}
+    {!!props.areHighlightStories &&
+      <UserStory
+        hasMarginRight
+        hasMarginLeft
+      >
+        <HighLightCircle
+          style={{
+            borderWidth: 1,
+            borderColor: '#C7C7C7',
+          }}
         >
-          <Avatar 
-            style={{borderWidth: 1, borderColor: 'white'}} 
-            source={{uri: user.url}} 
-          />
-        </CircleContainer>
-        <UserName>{user.username}</UserName>
-      </UserStory>))
+          <Ionicons name="add" size={22} color="black" />
+        </HighLightCircle>
+        <UserName>
+          New Story
+        </UserName>
+      </UserStory>
+    }
+    {
+      React.Children.toArray(_data.map((user, index) =>
+        <UserStory
+          hasMarginRight={index === _data.length - 1 ? false : true}
+          hasMarginLeft={index === 0 && !props.areHighlightStories ? true : false}>
+          <CircleContainer
+            colors={props.areHighlightStories ? ['#C7C7C7', '#C7C7C7'] : ['#FBAA47', '#D91A46', '#192f6a']}
+          >
+            <Avatar
+              style={{ borderWidth: 1, borderColor: 'white' }}
+              source={{ uri: user.url }}
+            />
+          </CircleContainer>
+          <UserName>{user.username}</UserName>
+        </UserStory>))
     }
 
   </Container>
-  
+
 }
 
 export default StoriesSlider
